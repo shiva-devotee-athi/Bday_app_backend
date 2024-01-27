@@ -1,4 +1,4 @@
-const Greeting = require("../model/FriendsWish");
+const Greeting = require('../model/FriendsWish');
 
 const multer = require("multer");
 const path = require("path");
@@ -6,7 +6,7 @@ const path = require("path");
 const sayYourWish = (req, res) => {
   try {
     const { friendName, wish, greetingCard } = req.body;
-    Greeting.findOne({ where: { friendName: friendName } }).then(
+    Greeting.where({friendName}).findOne().then(
       async (data) => {
         if (data) {
           res.status(200).json({

@@ -1,32 +1,27 @@
-const { sequelize } = require("../database/connection");
-const { DataTypes, UUID, UUIDV4 } = require("sequelize");
+const { Schema, model } = require("mongoose");
 
-const Greeting = sequelize.define(
-  "greetings",
+const GreetingSchema = new Schema(
   {
-    id: {
-      type: UUID,
-      defaultValue: UUIDV4,
-      primaryKey: true,
-      unique: true,
-    },
     image: {
-      type: DataTypes.STRING,
+      type: String,
     },
     friendName: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: String,
+      required: true,
     },
     wish: {
-      type: DataTypes.TEXT,
+      type: String,
+      required: true,
     },
     greetingCard: {
-      type: DataTypes.INTEGER,
+      type: String,
+      required: true,
     },
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
+const Greeting = model("Greeting", GreetingSchema);
 module.exports = Greeting;
