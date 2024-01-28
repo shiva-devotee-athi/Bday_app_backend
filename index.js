@@ -13,7 +13,7 @@ const router = require('./routes/router')
 app.use('/api', router)
 app.use('/Images', express.static('./Images'))
 
-app.get('/',(req, res)=>{res.json('hello shri')})
+app.get('/',(req, res)=>{res.json('Hello Shri')})
 
 app.listen(3000, () => {
   console.log("port running");
