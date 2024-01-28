@@ -9,6 +9,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 connection();
 
+app.use(function (req ,res ,next){
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Set other headers to allow the necessary methods, headers, and credentials
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
+
+    next();
+})
+
 const router = require('./routes/router')
 
 app.use('/api', router)
