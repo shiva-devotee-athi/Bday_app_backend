@@ -1,4 +1,4 @@
-const Greeting = require('../model/FriendsWish');
+const Greeting = require("../model/FriendsWish");
 
 const multer = require("multer");
 const path = require("path");
@@ -6,27 +6,37 @@ const path = require("path");
 const sayYourWish = (req, res) => {
   try {
     const { friendName, wish, greetingCard } = req.body;
-    Greeting.where({friendName}).findOne().then(
-      async (data) => {
+    Greeting.where({ friendName })
+      .findOne()
+      .then(async (data) => {
         if (data) {
           res.status(200).json({
             message: "please check your name it already wished",
             status: true,
           });
         } else {
-          await Greeting.create({
+          Greeting.create({
             friendName,
             image: req.file.path,
             wish,
             greetingCard,
-          }).then(() => {
-            res
-              .status(201)
-              .json({ message: "Your wish send Successfully", status: true });
-          });
+          })
+            .then(() => {
+              res.status(201).json({
+                message: "Your wish was sent successfully",
+                status: true,
+              });
+            })
+            .catch((error) => {
+              console.error("Error creating Greeting in the database", error);
+              res.status(500).json({
+                error: "Error creating Greeting in the database",
+              });
+            });
         }
-      }
-    );
+
+        // stream.end(fileBuffer);
+      });
   } catch (error) {
     console.error("Error Happens in your entry", error);
     res
