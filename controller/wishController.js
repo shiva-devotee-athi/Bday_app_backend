@@ -14,28 +14,26 @@ const sayYourWish = (req, res) => {
             message: "please check your name it already wished",
             status: true,
           });
-        } else {
-          Greeting.create({
-            friendName,
-            image: req.file.path,
-            wish,
-            greetingCard,
-          })
-            .then(() => {
-              res.status(201).json({
-                message: "Your wish was sent successfully",
-                status: true,
-              });
-            })
-            .catch((error) => {
-              console.error("Error creating Greeting in the database", error);
-              res.status(500).json({
-                error: "Error creating Greeting in the database",
-              });
-            });
         }
 
-        // stream.end(fileBuffer);
+        await Greeting.create({
+          friendName,
+          image: req.file.path,
+          wish,
+          greetingCard,
+        })
+          .then(() => {
+            res.status(201).json({
+              message: "Your wish was sent successfully",
+              status: true,
+            });
+          })
+          .catch((error) => {
+            console.error("Error creating Greeting in the database", error);
+            res.status(500).json({
+              error: "Error creating Greeting in the database",
+            });
+          });
       });
   } catch (error) {
     console.error("Error Happens in your entry", error);
